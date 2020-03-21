@@ -10,6 +10,7 @@ This script does not include signing or actually releasing a build.
 
 ```bash
 npm ci
+npm start -- --help
 npm start -- build
 ```
 

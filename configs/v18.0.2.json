@@ -3,7 +3,7 @@
     "repo": "https://github.com/nextcloud/server",
     "name": "nextcloud",
     "exclude": [
-        "/*.yml",
+        "/.*.yml",
         "/.editorconfig",
         ".git",
         ".git*",
@@ -83,14 +83,9 @@
         "updater": {
             "repo": "https://github.com/nextcloud/updater",
             "exclude": [
-                "lib",
-                "vendor",
-                "*.md",
-                "*.json",
-                "Makefile",
-                "updater.php",
-                "version.php",
-                "buildVersionFile.php"
+                "!updater.phar",
+                "!index.php",
+                "**"
             ],
             "appsDir": "./"
         }
@@ -102,9 +97,10 @@
         "/composer.lock",
         "/node_modules",
         "/tests",
-        "/*.yml",
+        "/.*.yml",
         "/README.md",
         "/CONTRIBUTING.md",
+        "/CHANGELOG.md",
         "/Makefile",
         "/.tx",
         "/.github",

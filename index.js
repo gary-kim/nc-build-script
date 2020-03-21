@@ -163,17 +163,17 @@ async function nextcloudIgnore (appName, appDir, appConfig) {
 /**
  * Remove a given array of globs of files or directories
  * @param {Array<String>} globs Array of globs for files or directories to remove
- * @param {String} cwd Working directory from which to remove the list of files or direcotries
+ * @param {String} cwd Working directory from which to remove the list of files or directories
  */
 function globRemove (globs, cwd) {
-    const torm = glob.sync(globs, { cwd: cwd, matchBase: true });
+    const torm = glob.sync(globConvert(globs), { cwd: cwd });
     removeListed(torm, cwd);
 }
 
 /**
  * Remove a given array of files or directories
  * @param {Array<String>} listed Array of files or directories to remove
- * @param {String} cwd Working directory from which to remove the list of files or direcotries
+ * @param {String} cwd Working directory from which to remove the list of files or directories
  */
 function removeListed (listed, cwd) {
     listed.forEach(rm => {
@@ -197,7 +197,7 @@ function removeListed (listed, cwd) {
 /**
  * Write log message to console
  * @param {String} message Message to log
- * @param {LOGVERBOSITY.*} logverbosity Log verbosity
+ * @param {Number} logverbosity Log verbosity
  */
 function logMessage (message, logverbosity) {
     logverbosity = logverbosity || 1;
@@ -218,4 +218,19 @@ function setIfNotUndefined (...given) {
         }
     }
     return undefined;
+}
+
+/**
+ * Convert Glob from .gitignore style to glob style
+ * @param {Array<String>} globtc Glob in .gitignore style
+ * @returns {Array<String>} Glob in glob style
+ */
+function globConvert (globtc) {
+    return globtc
+        // Separate out negations to join later. This makes it easier to work on the patterns
+        .map(p => p[0] === '!' ? ['!', p.substr(1)]: ['', p])
+        // Add `**/` for patterns that do not start with `/`
+        .map(p => p[1][0] === "/" ? [p[0], p[1].substr(1)] : [p[0], `**/${p[1]}`])
+        // Rejoin separated negations
+        .map(p => p.join(''))
 }
