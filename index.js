@@ -106,13 +106,13 @@ async function addApp (appName, appsDir, appConfig) {
         logMessage(`${appName}: Cloning repo`);
         await git(appsDir).clone(appConfig.repo, appName, ['--recursive']);
         logMessage(`${appName}: Repo clone done`);
-        appGit = git(appDir);
+        const appGit = git(appDir);
         await appGit.checkout(appConfig.version);
         await appGit.submoduleUpdate();
     }
 
     if (appConfig.remove && fsExists(appDir)) {
-        removeListed([appDir], "")
+        removeListed([appDir], "");
     }
 
     await krankerlEnabledAppSetup(appName, appDir, appConfig);
@@ -236,9 +236,9 @@ function setIfNotUndefined (...given) {
 function globConvert (globtc) {
     return globtc
         // Separate out negations to join later. This makes it easier to work on the patterns
-        .map(p => p[0] === '!' ? ['!', p.substr(1)]: ['', p])
+        .map(p => p[0] === '!' ? ['!', p.substr(1)] : ['', p])
         // Add `**/` for patterns that do not start with `/`
         .map(p => p[1][0] === "/" ? [p[0], p[1].substr(1)] : [p[0], `**/${p[1]}`])
         // Rejoin separated negations
-        .map(p => p.join(''))
+        .map(p => p.join(''));
 }

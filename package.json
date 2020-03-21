@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "npx eslint --ext .js .",
-    "eslint": "npx eslint --ext .js .",
-    "eslint:fix": "npx eslint --ext .js . --fix"
+    "test": "npx eslint --ext .js index.js",
+    "eslint": "npx eslint --ext .js index.js",
+    "eslint:fix": "npx eslint --ext .js index.js --fix"
   },
   "repository": {
     "type": "git",

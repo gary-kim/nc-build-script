@@ -1,4 +1,4 @@
-# Nextcloud Build Script
+# Build Script for Use with Nextcloud
 
 **This script and repo is unaffiliated with Nextcloud GmbH**
 
@@ -8,10 +8,15 @@ This script does not include signing or actually releasing a build.
 
 ### How to Run
 
+**Requires Node v12 or later**
+
 ```bash
 npm ci
 npm start -- --help
 npm start -- build
+
+# Build v17.0.4
+npm start -- build --nc-version v17.0.4
 ```
 
 ### License
