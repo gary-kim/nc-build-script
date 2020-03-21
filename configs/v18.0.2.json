@@ -16,7 +16,6 @@
         "Makefile",
         "*.sh",
         "babel.config.js",
-        "composer.json",
         "package.json",
         "package-lock.json",
         "webpack.common.js",

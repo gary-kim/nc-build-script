@@ -59,7 +59,9 @@ async function build (cmd) {
     logMessage("Server: Cloning Repo");
     await buildGit.clone(config.repo, config.name, ['--recursive']);
     logMessage("Server: Clone Complete");
-    await git(`${buildDir}/${config.name}`).checkout(version);
+    const serverGit = git(`${buildDir}/${config.name}`);
+    await serverGit.checkout(version);
+    await serverGit.submoduleUpdate();
 
     // Remove excluded files from repo
     globRemove(config.exclude, `${buildDir}/${config.name}`);
@@ -104,7 +106,9 @@ async function addApp (appName, appsDir, appConfig) {
         logMessage(`${appName}: Cloning repo`);
         await git(appsDir).clone(appConfig.repo, appName, ['--recursive']);
         logMessage(`${appName}: Repo clone done`);
-        await git(appDir).checkout(appConfig.version);
+        appGit = git(appDir);
+        await appGit.checkout(appConfig.version);
+        await appGit.submoduleUpdate();
     }
 
     await krankerlEnabledAppSetup(appName, appDir, appConfig);
