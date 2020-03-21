@@ -1,0 +1,123 @@
+{
+    "version": "v17.0.0",
+    "repo": "https://github.com/nextcloud/server",
+    "name": "nextcloud",
+    "exclude": [
+        "/.*.yml",
+        "/.editorconfig",
+        ".git",
+        ".git*",
+        ".eslintrc.js",
+        ".jshintrc",
+        ".mailmap",
+        ".tag",
+        "*.md",
+        "COPYING-README",
+        "Makefile",
+        "*.sh",
+        "babel.config.js",
+        "package.json",
+        "package-lock.json",
+        "webpack.common.js",
+        "webpack.dev.js",
+        "webpack.prod.js",
+        ".github",
+        ".idea",
+        ".tx",
+        "/build",
+        "/contribute",
+        "tests",
+        ".l10nignore",
+        "apps/*/webpack.js"
+    ],
+    "apps": {
+        "activity": {
+            "repo": "https://github.com/nextcloud/activity"
+        },
+        "files_pdfviewer": {
+            "repo": "https://github.com/nextcloud/files_pdfviewer"
+        },
+        "files_rightclick": {
+            "repo": "https://github.com/nextcloud/files_rightclick",
+            "version": "stable17"
+        },
+        "files_videoplayer": {
+            "repo": "https://github.com/nextcloud/files_videoplayer"
+        },
+        "firstrunwizard": {
+            "repo": "https://github.com/nextcloud/firstrunwizard"
+        },
+        "gallery": {
+            "repo": "https://github.com/nextcloud/gallery"
+        },
+        "logreader": {
+            "repo": "https://github.com/nextcloud/logreader"
+        },
+        "nextcloud_announcements": {
+            "repo": "https://github.com/nextcloud/nextcloud_announcements"
+        },
+        "notifications": {
+            "repo": "https://github.com/nextcloud/notifications"
+        },
+        "password_policy": {
+            "repo": "https://github.com/nextcloud/password_policy"
+        },
+        "privacy": {
+            "repo": "https://github.com/nextcloud/privacy"
+        },
+        "recommendations": {
+            "repo": "https://github.com/nextcloud/recommendations"
+        },
+        "serverinfo": {
+            "repo": "https://github.com/nextcloud/serverinfo"
+        },
+        "survey_client": {
+            "repo": "https://github.com/nextcloud/survey_client"
+        },
+        "testing": {
+            "remove": true
+        },
+        "text": {
+            "repo": "https://github.com/nextcloud/text",
+            "version": "stable17"
+        },
+        "viewer": {
+            "repo": "https://github.com/nextcloud/viewer"
+        },
+        "updater": {
+            "repo": "https://github.com/nextcloud/updater",
+            "exclude": [
+                "!updater.phar",
+                "!index.php",
+                "**"
+            ],
+            "appsDir": "./"
+        }
+    },
+    "globalExclude": [
+        "/.git",
+        ".gitignore",
+        "/composer.json",
+        "/composer.lock",
+        "/node_modules",
+        "/tests",
+        "/.*.yml",
+        "/README.md",
+        "/CONTRIBUTING.md",
+        "/CHANGELOG.md",
+        "/Makefile",
+        "/.tx",
+        "/.github",
+        "/.l10nignore",
+        "/package.json",
+        "/package-lock.json",
+        "/.gitattributes",
+        ".babelrc",
+        ".eslintrc.js",
+        "build.xml",
+        "/webpack.common.js",
+        "/webpack.dev.js",
+        "/webpack.prod.js",
+        "/src"
+    ]
+}
