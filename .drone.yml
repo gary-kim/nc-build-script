@@ -1,0 +1,17 @@
+kind: pipeline
+type: docker
+name: test
+
+steps:
+  - name: node-modules
+    image: node:13
+    commands:
+      - npm ci
+  - name: eslint
+    image: node:13
+    commands:
+      - npm run eslint
+  - name: test-run
+    image: node:13
+    commands:
+      - npm run start -- build
