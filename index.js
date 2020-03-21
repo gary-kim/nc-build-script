@@ -30,6 +30,7 @@ program
     .option('--custom-config <path>', `Custom ${packagejson.name} config file to use for building Nextcloud. Defaults to the config shipped with ${packagejson.name} which is currently for ${defaultConfig}`)
     .option('--build-dir <path>', 'Directory in which to build Nextcloud', './build')
     .option('--nc-version <version>', 'Nextcloud version to build', defaultConfig.toString())
+    .option('--exec-krankerl-cmds <true|false>', 'Execute commands defined in Krankerl.toml config files. Defaults to config file value or false')
     .action(build);
 
 program.parse(process.argv);
@@ -70,6 +71,7 @@ async function build (cmd) {
         appConfig.version = appConfig.version || config.version;
         appConfig.exclude = [...config.globalExclude, ...(appConfig.exclude || [])];
         appConfig.appsDir = path.resolve(`${buildDir}/${config.name}`, appConfig.appsDir || "./apps");
+        appConfig.krankerlCommands = setIfNotUndefined(cmd.execKrankerlCmds, appConfig.krankerlCommands, false);
 
         // Add the app
         addApp(appName, appConfig.appsDir, appConfig);
@@ -126,7 +128,7 @@ async function krankerlEnabledAppSetup (appName, appDir, appConfig) {
 
     if (krankerlConfig.package) {
         // run all `before_cmds` commands
-        if (krankerlConfig.package.before_cmds) {
+        if (appConfig.execKrankerlCmds && krankerlConfig.package.before_cmds) {
             krankerlConfig.package.before_cmds.forEach(cmd => {
                 execSync(cmd, { cwd: appDir, stdio: 'inherit' });
             });
@@ -202,4 +204,18 @@ function logMessage (message, logverbosity) {
     if (logverbosity <= program.V) {
         console.log(message);
     }
+}
+
+/**
+ * Returns the first argument that is not undefined
+ * @param {Array} given
+ * @returns {*|undefined}
+ */
+function setIfNotUndefined (...given) {
+    for (let i = 0; i < given.length; i++) {
+        if (typeof given[i] !== "undefined") {
+            return given[i];
+        }
+    }
+    return undefined;
 }
