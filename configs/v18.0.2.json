@@ -27,7 +27,8 @@
         "/build",
         "/contribute",
         "tests",
-        ".l10nignore"
+        ".l10nignore",
+        "apps/*/webpack.js"
     ],
     "apps": {
         "activity": {
@@ -72,6 +73,9 @@
         },
         "survey_client": {
             "repo": "https://github.com/nextcloud/survey_client"
+        },
+        "testing": {
+            "remove": true
         },
         "text": {
             "repo": "https://github.com/nextcloud/text"

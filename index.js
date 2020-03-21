@@ -111,6 +111,10 @@ async function addApp (appName, appsDir, appConfig) {
         await appGit.submoduleUpdate();
     }
 
+    if (appConfig.remove && fsExists(appDir)) {
+        removeListed([appDir], "")
+    }
+
     await krankerlEnabledAppSetup(appName, appDir, appConfig);
     await nextcloudIgnore(appName, appDir, appConfig);
     globRemove(appConfig.exclude, appDir);
