@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: test
+name: eslint
 
 steps:
   - name: node-modules
@@ -11,7 +11,59 @@ steps:
     image: node:13
     commands:
       - npm run eslint
-  - name: test-run
+---
+kind: pipeline
+type: docker
+name: latest-test
+
+steps:
+  - name: node-modules
+    image: node:13
+    commands:
+      - npm ci
+  - name: test-run-latest
     image: node:13
     commands:
       - npm run start -- build
+---
+kind: pipeline
+type: docker
+name: latest-krankerl-enabled-test
+
+steps:
+  - name: node-modules
+    image: node:13
+    commands:
+      - npm ci
+  - name: test-run-latest
+    image: node:13
+    commands:
+      - npm run start -- build --exec-krankerl-cmds true
+---
+kind: pipeline
+type: docker
+name: nc-18.0.2-test
+
+steps:
+  - name: node-modules
+    image: node:13
+    commands:
+      - npm ci
+  - name: test-run-latest
+    image: node:13
+    commands:
+      - npm run start -- build --nc-version v18.0.2
+---
+kind: pipeline
+type: docker
+name: nc-17.0.4-test
+
+steps:
+  - name: node-modules
+    image: node:13
+    commands:
+      - npm ci
+  - name: test-run-latest
+    image: node:13
+    commands:
+      - npm run start -- build --nc-version v17.0.4
