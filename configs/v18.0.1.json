@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/gary-kim/nextcloud-build-script/master/config.schema.json",
     "version": "v18.0.1",
     "repo": "https://github.com/nextcloud/server",
     "name": "nextcloud",

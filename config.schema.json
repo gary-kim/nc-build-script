@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/gary-kim/nextcloud-build-script/master/config.schema.json",
+  "title": "Nextcloud Build Script",
+  "description": "Build script configuration for use with Nextcloud",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of main server repo",
+      "type": "string"
+    },
+    "version": {
+      "description": "Version to checkout to in main repo and all other repos unless otherwise specified",
+      "type": "string"
+    },
+    "repo": {
+      "description": "Repository location of main server",
+      "type": "string"
+    },
+    "exclude": {
+      "description": "List of glob patterns to remove in final release",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "globalExclude": {
+      "description": "List of glob patterns to remove from all apps in final release",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
+    "apps": {
+      "type": "object",
+      "description": "Apps to include in final release",
+      "propertyNames": {
+        "pattern": "^([a-z]|_){1,80}$"
+      },
+      "patternProperties": {
+        "^([a-z]|_){1,80}$": {
+          "type": "object",
+          "description": "App to include in final release",
+          "properties": {
+            "repo": {
+              "type": "string",
+              "description": "Repository location of the app"
+            },
+            "version": {
+              "type": "string",
+              "description": "Version to checkout in app"
+            },
+            "remove": {
+              "type": ["string", "boolean"],
+              "default": false,
+              "description": "Whether to remove to remove the app or directory that was there previously. Can be set to\"continue\" if you'd like the directory to be removed then replaced with the app you specified"
+            },
+            "exclude": {
+              "description": "List of glob patterns to remove from the app in final release",
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "string"
+              }
+            },
+            "appsDir": {
+              "type": "string",
+              "description": "Directory in which to place the app",
+              "default": "./apps"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ['name', 'version', 'repo']
+}

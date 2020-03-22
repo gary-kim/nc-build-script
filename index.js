@@ -41,6 +41,7 @@ async function build (cmd) {
     const config = JSON.parse(await fs.readFile(configLocation));
 
     // Config defaults
+    config.apps = config.apps || [];
     config.exclude = config.exclude || [];
     config.globalExclude = config.globalExclude || [];
 
