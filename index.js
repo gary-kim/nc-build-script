@@ -102,6 +102,12 @@ function fsExists (fse) {
  */
 async function addApp (appName, appsDir, appConfig) {
     const appDir = `${appsDir}/${appName}`;
+    if (appConfig.remove && fsExists(appDir)) {
+        removeListed([appDir], "");
+        if (appConfig.remove !== "continue") {
+            return;
+        }
+    }
     if (appConfig.repo) {
         logMessage(`${appName}: Cloning repo`);
         await git(appsDir).clone(appConfig.repo, appName, ['--recursive']);
@@ -109,10 +115,6 @@ async function addApp (appName, appsDir, appConfig) {
         const appGit = git(appDir);
         await appGit.checkout(appConfig.version);
         await appGit.submoduleUpdate();
-    }
-
-    if (appConfig.remove && fsExists(appDir)) {
-        removeListed([appDir], "");
     }
 
     await krankerlEnabledAppSetup(appName, appDir, appConfig);

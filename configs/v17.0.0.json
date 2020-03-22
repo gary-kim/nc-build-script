@@ -92,6 +92,12 @@
                 "**"
             ],
             "appsDir": "./"
+        },
+        "skeleton": {
+            "repo": "https://github.com/nextcloud/example-files",
+            "remove": "continue",
+            "appsDir": "./core",
+            "version": "stable17"
         }
     },
     "globalExclude": [
