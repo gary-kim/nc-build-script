@@ -136,7 +136,7 @@ async function krankerlEnabledAppSetup (appName, appDir, appConfig) {
 
     if (krankerlConfig.package) {
         // run all `before_cmds` commands
-        if (appConfig.execKrankerlCmds && krankerlConfig.package.before_cmds) {
+        if (appConfig.krankerlCommands && krankerlConfig.package.before_cmds) {
             krankerlConfig.package.before_cmds.forEach(cmd => {
                 execSync(cmd, { cwd: appDir, stdio: 'inherit' });
             });
