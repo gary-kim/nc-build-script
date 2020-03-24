@@ -56,7 +56,7 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: nc-17.0.4-test
+name: nc-17.0.5-test
 
 steps:
   - name: node-modules
@@ -66,4 +66,4 @@ steps:
   - name: test-run-latest
     image: node:13
     commands:
-      - npm run start -- build --nc-version v17.0.4
+      - npm run start -- build --nc-version v17.0.5

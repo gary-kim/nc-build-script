@@ -31,6 +31,7 @@ program
     .option('--build-dir <path>', 'Directory in which to build Nextcloud', './build')
     .option('--nc-version <version>', 'Nextcloud version to build', defaultConfig.toString())
     .option('--exec-krankerl-cmds <true|false>', 'Execute commands defined in Krankerl.toml config files. Defaults to config file value or false')
+    .option('--patches <string>', 'Comma seperated list of globs for patches to apply', "")
     .action(build);
 
 program.parse(process.argv);
@@ -67,6 +68,8 @@ async function build (cmd) {
     // Remove excluded files from repo
     globRemove(config.exclude, `${buildDir}/${config.name}`);
 
+    const appList = [];
+
     Object.keys(config.apps).forEach(appName => {
         const appConfig = config.apps[appName];
 
@@ -77,8 +80,48 @@ async function build (cmd) {
         appConfig.krankerlCommands = setIfNotUndefined(cmd.execKrankerlCmds, appConfig.krankerlCommands, false);
 
         // Add the app
-        addApp(appName, appConfig.appsDir, appConfig);
+        appList.push(addApp(appName, appConfig.appsDir, appConfig));
     });
+
+    await Promise.all(appList);
+
+    // Apply given patches
+    if (config.patches.length > 0) {
+        logMessage("Setup complete. Applying patches", LOGVERBOSITY.LOW);
+    }
+
+    await buildGit.init();
+    if (config.patches) {
+        const patches = glob.sync(globConvert(config.patches), { cwd: process.cwd() });
+        for (let i = 0; i < patches.length; i++) {
+            logMessage(`PATCHES: Applying patch ${patches[i]}`, LOGVERBOSITY.HIGH);
+            await buildGit.raw([
+                'apply',
+                '--directory',
+                config.name,
+                path.resolve(process.cwd(), patches[i]),
+            ]).catch(err => {
+                console.error(`PATCHES: Could not apply '${patches[i]}'. ${err.toString()}`);
+                process.exit(1);
+            });
+        }
+    }
+
+    if (cmd.patches && cmd.patches.length > 0) {
+        const cmdPatches = glob.sync((cmd.patches || "").split(","), { cwd: process.cwd() });
+        for (let i = 0; i < cmdPatches.length; i++) {
+            logMessage(`PATCHES: Applying patch ${cmdPatches[i]}`, LOGVERBOSITY.HIGH);
+            await buildGit.raw([
+                'apply',
+                '--directory',
+                config.name,
+                path.resolve(appRoot, cmdPatches[i]),
+            ]).catch(err => {
+                console.error(`PATCHES: Could not apply '${cmdPatches[i]}'. ${err.toString()}`);
+                process.exit(1);
+            });
+        }
+    }
 }
 
 /**

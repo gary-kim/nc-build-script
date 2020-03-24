@@ -1,0 +1,45 @@
+diff --git a/lib/private/Authentication/Token/RemoteWipe.php b/lib/private/Authentication/Token/RemoteWipe.php
+index 8e66abef7b2..6f0154287d2 100644
+--- a/lib/private/Authentication/Token/RemoteWipe.php
++++ b/lib/private/Authentication/Token/RemoteWipe.php
+@@ -55,18 +55,14 @@ public function __construct(IProvider $tokenProvider,
+ 	}
+ 
+ 	/**
+-	 * @param int $id
+-	 *
++	 * @param IToken $token
+ 	 * @return bool
+ 	 *
+ 	 * @throws InvalidTokenException
+ 	 * @throws WipeTokenException
+-	 * @throws ExpiredTokenException
+ 	 */
+-	public function markTokenForWipe(int $id): bool {
+-		$token = $this->tokenProvider->getTokenById($id);
+-
+-		if (!($token instanceof IWipeableToken)) {
++	public function markTokenForWipe(IToken $token): bool {
++		if (!$token instanceof IWipeableToken) {
+ 			return false;
+ 		}
+ 
+diff --git a/settings/Controller/AuthSettingsController.php b/settings/Controller/AuthSettingsController.php
+index 1d6e26d0f73..2cd4e1f6204 100644
+--- a/settings/Controller/AuthSettingsController.php
++++ b/settings/Controller/AuthSettingsController.php
+@@ -273,7 +273,13 @@ private function findTokenByIdAndUser(int $id): IToken {
+ 	 * @throws \OC\Authentication\Exceptions\ExpiredTokenException
+ 	 */
+ 	public function wipe(int $id): JSONResponse {
+-		if (!$this->remoteWipe->markTokenForWipe($id)) {
++		try {
++			$token = $this->findTokenByIdAndUser($id);
++		} catch (InvalidTokenException $e) {
++			return new JSONResponse([], Http::STATUS_NOT_FOUND);
++		}
++
++		if (!$this->remoteWipe->markTokenForWipe($token)) {
+ 			return new JSONResponse([], Http::STATUS_BAD_REQUEST);
+ 		}
+ 

@@ -33,6 +33,14 @@
         "type": "string"
       }
     },
+    "patches": {
+      "description": "List of glob patterns for patches to apply before making the final release",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      }
+    },
     "apps": {
       "type": "object",
       "description": "Apps to include in final release",
