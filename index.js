@@ -61,9 +61,12 @@ async function build (cmd) {
     logMessage("Server: Cloning Repo");
     await buildGit.clone(config.repo, config.name, ['--recursive']);
     logMessage("Server: Clone Complete");
-    const serverGit = git(`${buildDir}/${config.name}`);
+    const serverPath = `${buildDir}/${config.name}`;
+    const serverGit = git(serverPath);
     await serverGit.checkout(version);
     await serverGit.submoduleUpdate();
+    const versionHash = await serverGit.revparse(['HEAD']);
+    await fs.writeFile(`${serverPath}/version.php`, versionFile((await fs.readFile(`${serverPath}/version.php`)).toString(), versionHash));
 
     // Remove excluded files from repo
     globRemove(config.exclude, `${buildDir}/${config.name}`);
@@ -246,6 +249,49 @@ function removeListed (listed, cwd) {
             fssync.rmdirSync(file, { recursive: true });
         }
     });
+}
+
+/**
+ * Take the version file in git and create a final release version.php file.
+ * @param {String} original content of the version.php file in git
+ * @param {String} hash git hash of the version being built
+ * @returns {String} content of final release version.php file
+ */
+function versionFile (original, hash) {
+    const originalArr = original.split("\n");
+    logMessage(`Creating version.php file`, LOGVERBOSITY.MEDIUM);
+    let tr = "<?php" + "\n";
+    tr += findLineWithString(originalArr, "$OC_Version") + "\n";
+    tr += findLineWithString(originalArr, "$OC_VersionString") + "\n";
+    tr += findLineWithString(originalArr, "$OC_Channel") + "\n";
+    tr += findLineWithString(originalArr, "$vendor") + "\n";
+    tr += replacePHPString(findLineWithString(originalArr, "$OC_Build"), `${new Date().toISOString()} ${hash}`) + "\n";
+    const upgradeStart = originalArr.findIndex(s => s.includes("$OC_VersionCanBeUpgradedFrom"));
+    for (let i = upgradeStart; originalArr[i] !== ""; i++) {
+        tr += originalArr[i] + "\n";
+    }
+    logMessage(`version.php file created`, LOGVERBOSITY.MEDIUM);
+    return tr;
+}
+
+/**
+ * Find a string in an array of strings that include a given string
+ * @param {Array<String>} lines array to search
+ * @param {String} content string to search for
+ * @returns {String} the string that was found
+ */
+function findLineWithString (lines, content) {
+    return (lines.filter(s => s.includes(content)) || [""])[0];
+}
+
+/**
+ * Replace a line with an empty PHP string with the given replace.
+ * @param {String} toReplace The line to replace
+ * @param {String} replaceWith The string to replace it with
+ * @returns {String} the string with content replaced
+ */
+function replacePHPString (toReplace, replaceWith) {
+    return toReplace.replace(/'(.*)'|"(.*)"/g, `'${replaceWith}'`);
 }
 
 /**
