@@ -45,6 +45,7 @@ async function build (cmd) {
     config.apps = config.apps || [];
     config.exclude = config.exclude || [];
     config.globalExclude = config.globalExclude || [];
+    config.patches = config.patches || [];
 
     // Setup build directory
     if (fsExists(buildDir)) {
