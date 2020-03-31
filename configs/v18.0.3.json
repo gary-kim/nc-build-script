@@ -9,14 +9,15 @@
     ],
     "exclude": [
         "/.*.yml",
-        "/.editorconfig",
+        ".editorconfig",
         ".git",
         ".git*",
         ".eslintrc.js",
         ".jshintrc",
         ".mailmap",
         ".tag",
-        "*.md",
+        "/*.md",
+        "/composer.json",
         "COPYING-README",
         "Makefile",
         "*.sh",
@@ -33,7 +34,11 @@
         "/contribute",
         "tests",
         ".l10nignore",
-        "apps/*/webpack.js"
+        "/core/src",
+        "/core/webpack.js",
+        "/apps/*/webpack.js",
+        "/apps/*/src",
+        "/apps/*/*.md"
     ],
     "apps": {
         "activity": {
@@ -105,10 +110,8 @@
         }
     },
     "globalExclude": [
-        "/.git",
-        ".gitignore",
-        "/composer.json",
-        "/composer.lock",
+        ".git",
+        ".git*",
         "/node_modules",
         "/tests",
         "/.*.yml",
@@ -128,6 +131,9 @@
         "/webpack.common.js",
         "/webpack.dev.js",
         "/webpack.prod.js",
-        "/src"
+        "/src",
+        "/cypress",
+        "/cypress.json",
+        ".editorconfig"
     ]
 }

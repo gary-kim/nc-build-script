@@ -95,7 +95,7 @@ async function build (cmd) {
     }
 
     await buildGit.init();
-    if (config.patches) {
+    if (config.patches && config.patches.length > 0) {
         const patches = glob.sync(globConvert(config.patches), { cwd: process.cwd() });
         for (let i = 0; i < patches.length; i++) {
             logMessage(`PATCHES: Applying patch ${patches[i]}`, LOGVERBOSITY.HIGH);
@@ -126,6 +126,8 @@ async function build (cmd) {
             });
         }
     }
+
+    logMessage("Nextcloud build complete!");
 }
 
 /**
@@ -167,7 +169,7 @@ async function addApp (appName, appsDir, appConfig) {
 
     await krankerlEnabledAppSetup(appName, appDir, appConfig);
     await nextcloudIgnore(appName, appDir, appConfig);
-    globRemove(appConfig.exclude, appDir);
+    await globRemove(appConfig.exclude, appDir);
 }
 
 /**
@@ -316,11 +318,12 @@ function replacePHPString (toReplace, replaceWith) {
 /**
  * Write log message to console
  * @param {String} message Message to log
- * @param {Number} logverbosity Log verbosity
+ * @param {Number} [logverbosity] Log verbosity. Defaults to LOGVERBOSITY.LOW
  */
 function logMessage (message, logverbosity) {
-    logverbosity = logverbosity || 1;
+    logverbosity = logverbosity || LOGVERBOSITY.LOW;
     if (logverbosity <= program.V) {
+        // eslint-disable-next-line
         console.log(message);
     }
 }
