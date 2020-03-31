@@ -1,5 +1,5 @@
 {
-  "name": "nextcloud-build-script",
+  "name": "nc-build-script",
   "version": "0.0.1",
   "description": "Build Script for use with Nextcloud (Not Affiliated with Nextcloud GmbH)",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gary-kim/nextcloud-build-script.git"
+    "url": "git+https://github.com/gary-kim/nc-build-script.git"
   },
   "author": "Gary Kim <gary@garykim.dev>",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/gary-kim/nextcloud-build-script/issues"
+    "url": "https://github.com/gary-kim/nc-build-script/issues"
   },
-  "homepage": "https://github.com/gary-kim/nextcloud-build-script#readme",
+  "homepage": "https://github.com/gary-kim/nc-build-script#readme",
   "engines": {
     "node": ">=12.0.0"
   },
