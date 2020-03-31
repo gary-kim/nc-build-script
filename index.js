@@ -67,7 +67,7 @@ async function build (cmd) {
     await serverGit.checkout(version);
     await serverGit.submoduleUpdate();
     const versionHash = await serverGit.revparse(['HEAD']);
-    await fs.writeFile(`${serverPath}/version.php`, versionFile((await fs.readFile(`${serverPath}/version.php`)).toString(), versionHash));
+    await fs.writeFile(`${serverPath}/version.php`, versionFile((await fs.readFile(`${serverPath}/version.php`)).toString(), versionHash, { versionString: config.versionString }));
 
     // Remove excluded files from repo
     globRemove(config.exclude, `${buildDir}/${config.name}`);
@@ -256,14 +256,19 @@ function removeListed (listed, cwd) {
  * Take the version file in git and create a final release version.php file.
  * @param {String} original content of the version.php file in git
  * @param {String} hash git hash of the version being built
+ * @param {Object} [config] extra optional config
+ * @param {String} [config.versionString] override version string in the version file
  * @returns {String} content of final release version.php file
  */
-function versionFile (original, hash) {
+function versionFile (original, hash, config) {
+    if (typeof config !== "object") {
+        config = {};
+    }
     const originalArr = original.split("\n");
     logMessage(`Creating version.php file`, LOGVERBOSITY.MEDIUM);
     let tr = "<?php" + "\n";
     tr += findLineWithString(originalArr, "$OC_Version") + "\n";
-    tr += findLineWithString(originalArr, "$OC_VersionString") + "\n";
+    tr += defaultOrReplaceIfSet(findLineWithString(originalArr, "$OC_VersionString"), config.versionString) + "\n";
     tr += findLineWithString(originalArr, "$OC_Channel") + "\n";
     tr += findLineWithString(originalArr, "$vendor") + "\n";
     tr += replacePHPString(findLineWithString(originalArr, "$OC_Build"), `${new Date().toISOString()} ${hash}`) + "\n";
@@ -273,6 +278,19 @@ function versionFile (original, hash) {
     }
     logMessage(`version.php file created`, LOGVERBOSITY.MEDIUM);
     return tr;
+}
+
+/**
+ * Do a replacePHPString if replaceWith is set but return given directly if replaceWith is undefined
+ * @param {String} given
+ * @param {String} replaceWith
+ * @returns {String}
+ */
+function defaultOrReplaceIfSet (given, replaceWith) {
+    if (typeof replaceWith !== 'undefined') {
+        return replacePHPString(given, replaceWith);
+    }
+    return given;
 }
 
 /**

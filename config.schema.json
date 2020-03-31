@@ -17,6 +17,10 @@
       "description": "Repository location of main server",
       "type": "string"
     },
+    "versionString": {
+      "description": "Custom string to put in $OC_VersionString in version.php",
+      "type": "string"
+    },
     "exclude": {
       "description": "List of glob patterns to remove in final release",
       "type": "array",
