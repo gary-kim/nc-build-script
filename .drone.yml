@@ -11,6 +11,13 @@ steps:
     image: node:13
     commands:
       - npm run eslint
+
+trigger:
+  branch:
+    - master
+  event:
+    - pull_request
+    - push
 ---
 kind: pipeline
 type: docker
@@ -25,6 +32,13 @@ steps:
     image: node:13
     commands:
       - npm run start -- build
+
+trigger:
+  branch:
+    - master
+  event:
+    - pull_request
+    - push
 ---
 kind: pipeline
 type: docker
@@ -39,6 +53,13 @@ steps:
     image: node:13
     commands:
       - npm run start -- build --exec-krankerl-cmds true
+
+trigger:
+  branch:
+    - master
+  event:
+    - pull_request
+    - push
 ---
 kind: pipeline
 type: docker
@@ -53,6 +74,13 @@ steps:
     image: node:13
     commands:
       - npm run start -- build --nc-version v18.0.2
+
+trigger:
+  branch:
+    - master
+  event:
+    - pull_request
+    - push
 ---
 kind: pipeline
 type: docker
@@ -67,3 +95,10 @@ steps:
     image: node:13
     commands:
       - npm run start -- build --nc-version v17.0.5
+
+trigger:
+  branch:
+    - master
+  event:
+    - pull_request
+    - push
