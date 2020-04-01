@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/gary-kim/nextcloud-build-script/master/config.schema.json",
+  "$id": "https://raw.githubusercontent.com/gary-kim/nc-build-script/master/config.schema.json",
   "title": "Nextcloud Build Script",
   "description": "Build script configuration for use with Nextcloud",
   "type": "object",

@@ -2,9 +2,17 @@
 
 **This script and repo is unaffiliated with Nextcloud GmbH**
 
+**If you are running Nextcloud for a large enterprise, consider getting a subscription with [Nextcloud GmbH](https://nextcloud.com/enterprise/) to get the supported version.**
+
+**Normal users are also probably better served by the builds created by Nextcloud GmbH. Those can be downloaded [here](https://nextcloud.com/install/).**
+
 This is a build script for use with Nextcloud.
 
 This script does not include signing or actually releasing a build.
+
+If you encounter any issues while using the output of this script, make sure the issue is reproducible in [Nextcloud GmbH releases](https://download.nextcloud.com/server/releases/) before making a new issue in the Nextcloud issue tracker. If it cannot be reproduced, open an issue in this repo instead.
+
+You likely cannot call the output of this script Nextcloud and will have to change the name as *Nextcloud* is a registered trademark of Nextcloud GmbH.
 
 ### How to Run
 
@@ -46,6 +54,8 @@ List of things in the Nextcloud GmbH release that are not in releases made by th
 
 ### License
 
-Licensed under [AGPL-3.0-or-later](LICENSE)
+Licensed under [AGPL-3.0-or-later](LICENSE).
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
 
 Copyright &copy; 2020 Gary Kim &lt;<gary@garykim.dev>&gt;
