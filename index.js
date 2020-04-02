@@ -6,6 +6,7 @@ const git = require('simple-git/promise');
 const glob = require('glob-gitignore');
 const parseGitignore = require('parse-gitignore');
 const path = require('path');
+const semver = require('semver');
 const toml = require('toml');
 
 const appRoot = path.dirname(require.main.filename);
@@ -36,7 +37,23 @@ program
 
 program.parse(process.argv);
 
+/**
+ * Ensure Node version is a supported version
+ */
+function checkNodeVersion () {
+    let engineRequirement = "*";
+    if (packagejson.engines && packagejson.engines.node) {
+        engineRequirement = packagejson.engines.node;
+    }
+    if (!semver.satisfies(process.version, engineRequirement)) {
+        console.error(`Unsupported Node version. ${engineRequirement} required`);
+        process.exit(1);
+    }
+}
+
 async function build (cmd) {
+    checkNodeVersion();
+
     const configLocation = cmd.config || `${appRoot}/configs/${cmd.ncVersion}.json`;
     const buildDir = cmd.buildDir;
     const config = JSON.parse(await fs.readFile(configLocation));
