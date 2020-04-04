@@ -50,7 +50,7 @@ steps:
     image: node:13
     commands:
       - npm ci
-  - name: test-run-latest
+  - name: test-run-krankerl
     image: node:13
     commands:
       - npm run start -- build --exec-krankerl-cmds true
@@ -71,7 +71,7 @@ steps:
     image: node:13
     commands:
       - npm ci
-  - name: test-run-latest
+  - name: test-run
     image: node:13
     commands:
       - npm run start -- build --nc-version v18.0.2
@@ -92,10 +92,32 @@ steps:
     image: node:13
     commands:
       - npm ci
-  - name: test-run-latest
+  - name: test-run
     image: node:13
     commands:
       - npm run start -- build --nc-version v17.0.5
+
+trigger:
+  branch:
+    - master
+  event:
+    - pull_request
+    - push
+
+---
+kind: pipeline
+type: docker
+name: master-build-test
+
+steps:
+  - name: node-modules
+    image: node:13
+    commands:
+      - npm ci
+  - name: test-run-master
+    image: node:13
+    commands:
+      - npm run start -- build --nc-version master
 
 trigger:
   branch:

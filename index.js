@@ -84,7 +84,7 @@ async function build (cmd) {
     await serverGit.checkout(version);
     await serverGit.submoduleUpdate();
     const versionHash = await serverGit.revparse(['HEAD']);
-    await fs.writeFile(`${serverPath}/version.php`, versionFile((await fs.readFile(`${serverPath}/version.php`)).toString(), versionHash, { versionString: config.versionString }));
+    await fs.writeFile(`${serverPath}/version.php`, versionFile((await fs.readFile(`${serverPath}/version.php`)).toString(), versionHash, { versionString: config.versionString, updateChannel: config.updateChannel }));
 
     // Remove excluded files from repo
     globRemove(config.exclude, `${buildDir}/${config.name}`);
@@ -144,7 +144,7 @@ async function build (cmd) {
         }
     }
 
-    logMessage("Nextcloud build complete!");
+    logMessage("Build complete!");
 }
 
 /**
@@ -277,6 +277,7 @@ function removeListed (listed, cwd) {
  * @param {String} hash git hash of the version being built
  * @param {Object} [config] extra optional config
  * @param {String} [config.versionString] override version string in the version file
+ * @param {String} [config.updateChannel] override the update channel string in the version file
  * @returns {String} content of final release version.php file
  */
 function versionFile (original, hash, config) {
@@ -288,7 +289,7 @@ function versionFile (original, hash, config) {
     let tr = "<?php" + "\n";
     tr += findLineWithString(originalArr, "$OC_Version") + "\n";
     tr += defaultOrReplaceIfSet(findLineWithString(originalArr, "$OC_VersionString"), config.versionString) + "\n";
-    tr += findLineWithString(originalArr, "$OC_Channel") + "\n";
+    tr += defaultOrReplaceIfSet(findLineWithString(originalArr, "$OC_Channel"), config.updateChannel) + "\n";
     tr += findLineWithString(originalArr, "$vendor") + "\n";
     tr += replacePHPString(findLineWithString(originalArr, "$OC_Build"), `${new Date().toISOString()} ${hash}`) + "\n";
     const upgradeStart = originalArr.findIndex(s => s.includes("$OC_VersionCanBeUpgradedFrom"));

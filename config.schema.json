@@ -5,6 +5,10 @@
   "description": "Build script configuration for use with Nextcloud",
   "type": "object",
   "properties": {
+    "$schema": {
+      "description": "Url to this file to help IDE users when editing the config",
+      "type": "string"
+    },
     "name": {
       "description": "Name of main server repo",
       "type": "string"
@@ -19,6 +23,10 @@
     },
     "versionString": {
       "description": "Custom string to put in $OC_VersionString in version.php",
+      "type": "string"
+    },
+    "updateChannel": {
+      "description": "Custom string to set the update channel to in version.php",
       "type": "string"
     },
     "exclude": {
@@ -81,7 +89,8 @@
               "type": "string",
               "description": "Directory in which to place the app",
               "default": "./apps"
-            }
+            },
+            "additionalProperties": false
           }
         }
       }
@@ -91,5 +100,6 @@
     "name",
     "version",
     "repo"
-  ]
+  ],
+  "additionalProperties": false
 }
