@@ -29,7 +29,10 @@ npm start -- build --nc-version v17.0.4
 
 You can find a list of currently supported Nextcloud build versions in the [configs](configs) directory.
 
-You can also specify a custom config. Look in the help options for that.
+### Custom Config
+
+If you'd like to make a custom config, copy the version you'd like from the [configs](configs) directory then make the desired modifications to that file.
+Once you've made those modifications, run the script with that config by running `npm start -- build --custom-config <path to your config>`.
 
 ### Currently Missing
 
