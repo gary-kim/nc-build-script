@@ -63,6 +63,7 @@ async function build (cmd) {
     config.exclude = config.exclude || [];
     config.globalExclude = config.globalExclude || [];
     config.patches = config.patches || [];
+    config.includedPatches = config.includedPatches || [];
 
     // Setup build directory
     if (fsExists(buildDir)) {
@@ -107,44 +108,53 @@ async function build (cmd) {
     await Promise.all(appList);
 
     // Apply given patches
-    if (config.patches.length > 0) {
+    if (config.patches.length > 0 || (cmd.patches && cmd.patches.length > 0) || config.includedPatches.length > 0) {
         logMessage("Setup complete. Applying patches", LOGVERBOSITY.LOW);
     }
 
     await buildGit.init();
+
+    // Apply patches given in the file as included patches
+    if (config.includedPatches && config.includedPatches.length > 0) {
+        const patches = glob.sync(globConvert(config.includedPatches), { cwd: appRoot });
+        await applyPatchesToBuild(patches.map(x => path.resolve(appRoot, x)), config, buildGit);
+    }
+
+    // Apply patches given as extra patches in config
     if (config.patches && config.patches.length > 0) {
-        const patches = glob.sync(globConvert(config.patches), { cwd: process.cwd() });
-        for (let i = 0; i < patches.length; i++) {
-            logMessage(`PATCHES: Applying patch ${patches[i]}`, LOGVERBOSITY.HIGH);
-            await buildGit.raw([
-                'apply',
-                '--directory',
-                config.name,
-                path.resolve(process.cwd(), patches[i]),
-            ]).catch(err => {
-                console.error(`PATCHES: Could not apply '${patches[i]}'. ${err.toString()}`);
-                process.exit(1);
-            });
-        }
+        const configDir = path.dirname(configLocation);
+        const patches = glob.sync(globConvert(config.patches), { cwd: configDir });
+        await applyPatchesToBuild(patches.map(x => path.resolve(configDir, x)), config, buildGit);
     }
 
     if (cmd.patches && cmd.patches.length > 0) {
         const cmdPatches = glob.sync((cmd.patches || "").split(","), { cwd: process.cwd() });
-        for (let i = 0; i < cmdPatches.length; i++) {
-            logMessage(`PATCHES: Applying patch ${cmdPatches[i]}`, LOGVERBOSITY.HIGH);
-            await buildGit.raw([
-                'apply',
-                '--directory',
-                config.name,
-                path.resolve(appRoot, cmdPatches[i]),
-            ]).catch(err => {
-                console.error(`PATCHES: Could not apply '${cmdPatches[i]}'. ${err.toString()}`);
-                process.exit(1);
-            });
-        }
+        await applyPatchesToBuild(cmdPatches.map(x => path.resolve(process.cwd(), x)), config, buildGit);
     }
 
     logMessage("Build complete!");
+}
+
+/**
+ * Apply a given array of patch files paths to the build
+ * @async
+ * @param {Array<String>} patches patches to apply
+ * @param config the build config
+ * @param buildGit simple-git to build directory
+ */
+async function applyPatchesToBuild (patches, config, buildGit) {
+    for (let i = 0; i < patches.length; i++) {
+        logMessage(`PATCHES: Applying patch ${patches[i]}`, LOGVERBOSITY.HIGH);
+        await buildGit.raw([
+            'apply',
+            '--directory',
+            config.name,
+            patches[i],
+        ]).catch(err => {
+            console.error(`PATCHES: Could not apply '${patches[i]}'. ${err.toString()}`);
+            process.exit(1);
+        });
+    }
 }
 
 /**

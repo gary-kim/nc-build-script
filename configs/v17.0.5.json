@@ -4,7 +4,7 @@
     "versionString": "17.0.5, Gary Kim Personal Build",
     "repo": "https://github.com/nextcloud/server",
     "name": "nextcloud",
-    "patches": [
+    "includedPatches": [
         "/patches/v17.0.5.patch"
     ],
     "exclude": [
