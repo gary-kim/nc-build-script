@@ -341,7 +341,7 @@ function findLineWithString (lines, content) {
  */
 function replacePHPString (toReplace, replaceWith) {
     const regex = /('(.*)')|("(.*))"/g;
-    const current = (toReplace.match(regex) || [""])[0].slice(1,-1);
+    const current = (toReplace.match(regex) || [""])[0].slice(1, -1);
     const replace = replaceWith.replace("{pre}", current);
     return toReplace.replace(regex, `'${replace}'`);
 }

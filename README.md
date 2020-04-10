@@ -1,5 +1,7 @@
 # Build Script for Use with Nextcloud
 
+[![Build Status](https://ghdrone.garykim.dev/api/badges/gary-kim/nc-build-script/status.svg)](https://ghdrone.garykim.dev/gary-kim/nc-build-script)
+
 **This script and repo is unaffiliated with Nextcloud GmbH**
 
 **If you are running Nextcloud for a large enterprise, consider getting a subscription with [Nextcloud GmbH](https://nextcloud.com/enterprise/) to get the supported version.**
