@@ -334,13 +334,16 @@ function findLineWithString (lines, content) {
 }
 
 /**
- * Replace a line with an empty PHP string with the given replace.
+ * Replace a line with an empty PHP string with the given replace. Any instance of {pre} will be replace with the preexisting string
  * @param {String} toReplace The line to replace
  * @param {String} replaceWith The string to replace it with
  * @returns {String} the string with content replaced
  */
 function replacePHPString (toReplace, replaceWith) {
-    return toReplace.replace(/'(.*)'|"(.*)"/g, `'${replaceWith}'`);
+    const regex = /('(.*)')|("(.*))"/g;
+    const current = (toReplace.match(regex) || [""])[0].slice(1,-1);
+    const replace = replaceWith.replace("{pre}", current);
+    return toReplace.replace(regex, `'${replace}'`);
 }
 
 /**
