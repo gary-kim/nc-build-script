@@ -2,7 +2,7 @@
     "$schema": "https://raw.githubusercontent.com/gary-kim/nc-build-script/master/config.schema.json",
     "version": "master",
     "repo": "https://github.com/nextcloud/server",
-    "updateChannel": "daily",
+    "updateChannel": "manual-daily",
     "name": "nextcloud",
     "exclude": [
         "/.*.yml",
