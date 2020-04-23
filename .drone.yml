@@ -53,7 +53,7 @@ steps:
   - name: test-run-krankerl
     image: node:13
     commands:
-      - npm run start -- build --exec-krankerl-cmds true
+      - npm run start -- build --exec-krankerl-cmds true > /dev/null
 
 trigger:
   branch:
