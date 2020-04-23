@@ -132,6 +132,10 @@ async function build (cmd) {
         await applyPatchesToBuild(cmdPatches.map(x => path.resolve(process.cwd(), x)), config, buildGit);
     }
 
+    logMessage("Clean up temporary files");
+
+    removeListed([".git"], buildDir);
+
     logMessage("Build complete!");
 }
 
