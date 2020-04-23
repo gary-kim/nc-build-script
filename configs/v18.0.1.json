@@ -15,6 +15,7 @@
         ".tag",
         "/*.md",
         "/composer.json",
+        "/composer.lock",
         "COPYING-README",
         "Makefile",
         "*.sh",
