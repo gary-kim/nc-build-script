@@ -7,7 +7,7 @@ steps:
     image: node:13
     commands:
       - npm ci
-  - name: eslint
+  - name: checkers
     image: node:13
     commands:
       - npm run eslint
@@ -64,7 +64,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: nc-18.0.2-test
+name: nc-18.0.3-test
 
 steps:
   - name: node-modules
@@ -74,7 +74,7 @@ steps:
   - name: test-run
     image: node:13
     commands:
-      - npm run start -- build --nc-version v18.0.2
+      - npm run start -- build --nc-version v18.0.3
 
 trigger:
   branch:
@@ -85,7 +85,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: nc-17.0.5-test
+name: nc-17.0.6-test
 
 steps:
   - name: node-modules
@@ -95,7 +95,7 @@ steps:
   - name: test-run
     image: node:13
     commands:
-      - npm run start -- build --nc-version v17.0.5
+      - npm run start -- build --nc-version v17.0.6
 
 trigger:
   branch:
