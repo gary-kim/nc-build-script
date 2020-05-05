@@ -28,7 +28,7 @@
     "glob-gitignore": "^1.0.14",
     "parse-gitignore": "^1.0.1",
     "semver": "^7.2.3",
-    "simple-git": "^1.132.0",
+    "simple-git": "^2.4.0",
     "toml": "^3.0.0"
   },
   "devDependencies": {
