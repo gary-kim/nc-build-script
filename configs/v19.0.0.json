@@ -36,7 +36,8 @@
         "/core/webpack.js",
         "/apps/*/webpack.js",
         "/apps/*/src",
-        "/apps/*/*.md"
+        "/apps/*/*.md",
+        ".php_cs.dist"
     ],
     "apps": {
         "activity": {
