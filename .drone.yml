@@ -64,7 +64,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: nc-18.0.14-test
+name: nc-19-test
 
 steps:
   - name: node-modules
@@ -74,7 +74,7 @@ steps:
   - name: test-run
     image: node:13
     commands:
-      - npm run start -- build --nc-version v18.0.14
+      - npm run start -- build --nc-version v19.0.9
 
 trigger:
   branch:
@@ -85,7 +85,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: nc-19.0.8-test
+name: nc-20-test
 
 steps:
   - name: node-modules
@@ -95,7 +95,7 @@ steps:
   - name: test-run
     image: node:13
     commands:
-      - npm run start -- build --nc-version v19.0.8
+      - npm run start -- build --nc-version v20.0.8
 
 trigger:
   branch:
