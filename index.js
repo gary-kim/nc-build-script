@@ -359,7 +359,7 @@ function replacePHPString (toReplace, replaceWith) {
  */
 function logMessage (message, logverbosity) {
     logverbosity = logverbosity || LOGVERBOSITY.LOW;
-    if (logverbosity <= program.V) {
+    if (logverbosity <= program.v) {
         // eslint-disable-next-line
         console.log(message);
     }
