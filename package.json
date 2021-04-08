@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Build Script for use with Nextcloud (Not Affiliated with Nextcloud GmbH)",
   "main": "index.js",
+  "bin": {
+    "nc-build-script": "index.js"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "npx eslint --ext .js index.js",

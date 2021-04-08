@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { execSync } = require('child_process');
 const commander = require('commander');
 const fssync = require('fs');
