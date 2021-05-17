@@ -25,7 +25,7 @@ const defaultConfig = fssync.readFileSync(`${appRoot}/VERSION`);
 const program = new commander.Command();
 program.version(packagejson.version);
 program.description(packagejson.description);
-program.option('-v <level>, --verbosity <level>', 'log verbosity level. Can be 1, 2, or 3.', 1);
+program.option('-v, --verbosity <number>', 'log verbosity level. Can be 1, 2, or 3.', 1);
 
 program
     .command('build')
@@ -38,6 +38,8 @@ program
     .action(build);
 
 program.parse(process.argv);
+
+const options = program.opts();
 
 /**
  * Ensure Node version is a supported version
@@ -359,7 +361,7 @@ function replacePHPString (toReplace, replaceWith) {
  */
 function logMessage (message, logverbosity) {
     logverbosity = logverbosity || LOGVERBOSITY.LOW;
-    if (logverbosity <= program.v) {
+    if (logverbosity <= options.verbosity) {
         // eslint-disable-next-line
         console.log(message);
     }
