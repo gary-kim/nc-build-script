@@ -31,7 +31,7 @@
     "glob-gitignore": "^1.0.14",
     "parse-gitignore": "^1.0.1",
     "semver": "^7.3.2",
-    "simple-git": "^2.37.0",
+    "simple-git": "^2.39.0",
     "toml": "^3.0.0"
   },
   "devDependencies": {
