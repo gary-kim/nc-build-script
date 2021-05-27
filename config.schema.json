@@ -81,7 +81,14 @@
               "description": "Version to checkout in app"
             },
             "remove": {
-              "type": ["string", "boolean"],
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
               "default": false,
               "description": "Whether to remove to remove the app or directory that was there previously. Can be set to\"continue\" if you'd like the directory to be removed then replaced with the app you specified"
             },
