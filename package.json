@@ -11,7 +11,7 @@
     "test": "npx eslint --ext .js index.js",
     "eslint": "npx eslint --ext .js index.js",
     "eslint:fix": "npx eslint --ext .js index.js --fix",
-    "validate-configs": "for i in configs/*; do npx ajv validate -s config.schema.json -d $i; done;"
+    "validate-configs": "for i in configs/*; do npx ajv validate -s config.schema.json --strict=true -d $i; done;"
   },
   "repository": {
     "type": "git",
