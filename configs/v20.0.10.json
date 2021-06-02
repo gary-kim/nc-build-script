@@ -1,0 +1,136 @@
+{
+    "$schema": "https://raw.githubusercontent.com/gary-kim/nc-build-script/master/config.schema.json",
+    "version": "v20.0.10",
+    "versionString": "20.0.10, Gary Kim Personal Build",
+    "repo": "https://github.com/nextcloud/server",
+    "name": "nextcloud",
+    "exclude": [
+        "/.*.yml",
+        ".editorconfig",
+        ".git",
+        ".git*",
+        ".eslintrc.js",
+        ".jshintrc",
+        ".mailmap",
+        ".tag",
+        "/*.md",
+        "/composer.json",
+        "/composer.lock",
+        "COPYING-README",
+        "Makefile",
+        "*.sh",
+        "babel.config.js",
+        "package.json",
+        "package-lock.json",
+        "webpack.common.js",
+        "webpack.dev.js",
+        "webpack.prod.js",
+        ".github",
+        ".idea",
+        ".tx",
+        "/build",
+        "/contribute",
+        "tests",
+        ".l10nignore",
+        "/core/src",
+        "/core/webpack.js",
+        "/apps/*/webpack.js",
+        "/apps/*/src",
+        "/apps/*/*.md"
+    ],
+    "apps": {
+        "activity": {
+            "repo": "https://github.com/nextcloud/activity"
+        },
+        "files_pdfviewer": {
+            "repo": "https://github.com/nextcloud/files_pdfviewer"
+        },
+        "files_rightclick": {
+            "repo": "https://github.com/nextcloud/files_rightclick"
+        },
+        "files_videoplayer": {
+            "repo": "https://github.com/nextcloud/files_videoplayer"
+        },
+        "firstrunwizard": {
+            "repo": "https://github.com/nextcloud/firstrunwizard"
+        },
+        "logreader": {
+            "repo": "https://github.com/nextcloud/logreader"
+        },
+        "nextcloud_announcements": {
+            "repo": "https://github.com/nextcloud/nextcloud_announcements"
+        },
+        "notifications": {
+            "repo": "https://github.com/nextcloud/notifications"
+        },
+        "password_policy": {
+            "repo": "https://github.com/nextcloud/password_policy"
+        },
+        "photos": {
+            "repo": "https://github.com/nextcloud/photos"
+        },
+        "privacy": {
+            "repo": "https://github.com/nextcloud/privacy"
+        },
+        "recommendations": {
+            "repo": "https://github.com/nextcloud/recommendations"
+        },
+        "serverinfo": {
+            "repo": "https://github.com/nextcloud/serverinfo"
+        },
+        "survey_client": {
+            "repo": "https://github.com/nextcloud/survey_client"
+        },
+        "testing": {
+            "remove": true
+        },
+        "text": {
+            "repo": "https://github.com/nextcloud/text"
+        },
+        "viewer": {
+            "repo": "https://github.com/nextcloud/viewer"
+        },
+        "updater": {
+            "repo": "https://github.com/nextcloud/updater",
+            "exclude": [
+                "!updater.phar",
+                "!index.php",
+                "**"
+            ],
+            "appsDir": "./"
+        },
+        "skeleton": {
+            "repo": "https://github.com/nextcloud/example-files",
+            "remove": "continue",
+            "appsDir": "./core",
+            "version": "stable20"
+        }
+    },
+    "globalExclude": [
+        ".git",
+        ".git*",
+        "/node_modules",
+        "/tests",
+        "/.*.yml",
+        "/README.md",
+        "/CONTRIBUTING.md",
+        "/CHANGELOG.md",
+        "/Makefile",
+        "/.tx",
+        "/.github",
+        "/.l10nignore",
+        "/package.json",
+        "/package-lock.json",
+        "/.gitattributes",
+        ".babelrc",
+        ".eslintrc.js",
+        "build.xml",
+        "/webpack.common.js",
+        "/webpack.dev.js",
+        "/webpack.prod.js",
+        "/src",
+        "/cypress",
+        "/cypress.json",
+        ".editorconfig"
+    ]
+}

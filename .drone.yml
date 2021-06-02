@@ -74,7 +74,7 @@ steps:
   - name: test-run
     image: node:13
     commands:
-      - npm run start -- build --nc-version v19.0.10
+      - npm run start -- build --nc-version v19.0.12
 
 trigger:
   branch:
@@ -95,7 +95,7 @@ steps:
   - name: test-run
     image: node:13
     commands:
-      - npm run start -- build --nc-version v20.0.9
+      - npm run start -- build --nc-version v20.0.10
 
 trigger:
   branch:
