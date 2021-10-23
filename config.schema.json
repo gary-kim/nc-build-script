@@ -100,6 +100,14 @@
                 "type": "string"
               }
             },
+            "before_cmds": {
+              "description": "Commands to run in the app directory just after cloning",
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "string"
+              }
+            },
             "appsDir": {
               "type": "string",
               "description": "Directory in which to place the app",
