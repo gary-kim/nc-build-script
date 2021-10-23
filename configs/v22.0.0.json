@@ -43,7 +43,10 @@
             "repo": "https://github.com/nextcloud/activity"
         },
         "circles": {
-            "repo": "https://github.com/nextcloud/circles"
+            "repo": "https://github.com/nextcloud/circles",
+            "before_cmds": [
+                "composer i"
+            ]
         },
         "files_pdfviewer": {
             "repo": "https://github.com/nextcloud/files_pdfviewer"

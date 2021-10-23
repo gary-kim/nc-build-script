@@ -202,9 +202,25 @@ async function addApp (appName, appsDir, appConfig) {
         await appGit.submoduleUpdate();
     }
 
+    await arbitraryCommandsApp(appName, appDir, appConfig);
     await krankerlEnabledAppSetup(appName, appDir, appConfig);
     await nextcloudIgnore(appName, appDir, appConfig);
     await globRemove(appConfig.exclude, appDir);
+}
+
+/**
+ * Run commands given in before_cmds
+ * @param {String} appName Name of Nextcloud app to add
+ * @param {String} appDir Apps directory in Nextcloud
+ * @param {Object} appConfig App Config object
+ */
+async function arbitraryCommandsApp (appName, appDir, appConfig) {
+    logMessage(`${appName}: running config before_cmds`, LOGVERBOSITY.MEDIUM);
+    if (appConfig.before_cmds && appConfig.before_cmds.length > 0) {
+        appConfig.before_cmds.forEach(cmd => {
+            execSync(cmd, { cwd: appDir, stdio: 'inherit' });
+        });
+    }
 }
 
 /**
