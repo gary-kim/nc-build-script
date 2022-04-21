@@ -4,11 +4,11 @@ name: checker
 
 steps:
   - name: node-modules
-    image: node:13
+    image: node:18
     commands:
       - npm ci
   - name: checkers
-    image: node:13
+    image: node:18
     commands:
       - npm run eslint
       - npm run validate-configs
@@ -26,11 +26,11 @@ name: latest-test
 
 steps:
   - name: node-modules
-    image: node:13
+    image: node:18
     commands:
       - npm ci
   - name: test-run-latest
-    image: node:13
+    image: node:18
     commands:
       - npm run start -- build
 
@@ -47,11 +47,11 @@ name: latest-krankerl-enabled-test
 
 steps:
   - name: node-modules
-    image: node:13
+    image: node:18
     commands:
       - npm ci
   - name: test-run-krankerl
-    image: node:13
+    image: node:18
     commands:
       - npm run start -- build --exec-krankerl-cmds true > /dev/null 2>&1
 
@@ -68,11 +68,11 @@ name: nc-21-test
 
 steps:
   - name: node-modules
-    image: node:13
+    image: node:18
     commands:
       - npm ci
   - name: test-run
-    image: node:13
+    image: node:18
     commands:
       - npm run start -- build --nc-version v21.0.9
 
@@ -89,11 +89,11 @@ name: nc-22-test
 
 steps:
   - name: node-modules
-    image: node:13
+    image: node:18
     commands:
       - npm ci
   - name: test-run
-    image: node:13
+    image: node:18
     commands:
       - npm run start -- build --nc-version v22.2.5
 
@@ -111,11 +111,11 @@ name: master-build-test
 
 steps:
   - name: node-modules
-    image: node:13
+    image: node:18
     commands:
       - npm ci
   - name: test-run-master
-    image: node:13
+    image: node:18
     commands:
       - npm run start -- build --nc-version master
 
