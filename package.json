@@ -29,7 +29,7 @@
   "dependencies": {
     "commander": "^7.2.0",
     "glob-gitignore": "^1.0.14",
-    "parse-gitignore": "^1.0.1",
+    "parse-gitignore": "^2.0.0",
     "semver": "^7.3.5",
     "simple-git": "^2.42.0",
     "toml": "^3.0.0"
