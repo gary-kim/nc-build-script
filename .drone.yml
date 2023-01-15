@@ -64,27 +64,6 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: nc-21-test
-
-steps:
-  - name: node-modules
-    image: node:13
-    commands:
-      - npm ci
-  - name: test-run
-    image: node:13
-    commands:
-      - npm run start -- build --nc-version v21.0.9
-
-trigger:
-  branch:
-    - master
-  event:
-    - pull_request
-    - push
----
-kind: pipeline
-type: docker
 name: nc-22-test
 
 steps:
