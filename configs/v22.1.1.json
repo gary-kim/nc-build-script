@@ -45,7 +45,7 @@
         "circles": {
             "repo": "https://github.com/nextcloud/circles",
             "before_cmds": [
-                "composer i"
+                "composer install"
             ]
         },
         "files_pdfviewer": {
