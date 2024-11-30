@@ -82,11 +82,10 @@ async function build (cmd) {
     // Clone server repo and checkout to provided version
     const buildGit = git(buildDir);
     logMessage("Server: Cloning Repo");
-    await buildGit.clone(config.repo, config.name, ['--recursive']);
+    await buildGit.clone(config.repo, config.name, { '--recursive': null, '--depth': 1, '--branch': version });
     logMessage("Server: Clone Complete");
     const serverPath = `${buildDir}/${config.name}`;
     const serverGit = git(serverPath);
-    await serverGit.checkout(version);
     await serverGit.submoduleUpdate();
     const versionHash = await serverGit.revparse(['HEAD']);
     await fs.writeFile(`${serverPath}/version.php`, versionFile((await fs.readFile(`${serverPath}/version.php`)).toString(), versionHash, { versionString: config.versionString, updateChannel: config.updateChannel }));
@@ -195,10 +194,9 @@ async function addApp (appName, appsDir, appConfig) {
     }
     if (appConfig.repo) {
         logMessage(`${appName}: Cloning repo`);
-        await git(appsDir).clone(appConfig.repo, appName, ['--recursive']);
+        await git(appsDir).clone(appConfig.repo, appName, { '--recursive': null, '--depth': 1, '--branch': appConfig.version });
         logMessage(`${appName}: Repo clone done`);
         const appGit = git(appDir);
-        await appGit.checkout(appConfig.version);
         await appGit.submoduleUpdate();
     }
 
