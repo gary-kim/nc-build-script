@@ -32,7 +32,7 @@
     "parse-gitignore": "^1.0.1",
     "semver": "^7.3.5",
     "simple-git": "^2.42.0",
-    "toml": "^3.0.0"
+    "toml": "^4.0.0"
   },
   "devDependencies": {
     "ajv-cli": "^5.0.0",
